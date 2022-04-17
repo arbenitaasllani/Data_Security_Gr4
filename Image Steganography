@@ -1,0 +1,27 @@
+import cv2
+import numpy as np
+import types
+from google.colab.patches import cv2_imshow #Google colab crashes if you try to display 
+#image using cv2.imshow() thus use this import
+def messageToBinary(message):
+  if type(message) == str:
+    return ''.join([ format(ord(i), "08b") for i in message ])
+  elif type(message) == bytes or type(message) == np.ndarray:
+    return [ format(i, "08b") for i in message ]
+  elif type(message) == int or type(message) == np.uint8:
+    return format(message, "08b")
+  else:
+    raise TypeError("Input type not supported")
+# Function to hide the secret message into the image
+
+def hideData(image, secret_message):
+
+  # calculate the maximum bytes to encode
+  n_bytes = image.shape[0] * image.shape[1] * 3 // 8
+  print("Maximum bytes to encode:", n_bytes)
+
+  #Check if the number of bytes to encode is less than the maximum bytes in the image
+  if len(secret_message) > n_bytes:
+      raise ValueError("Error encountered insufficient bytes, need bigger image or less data !!")
+  
+  secret_message += "#####"
