@@ -62,3 +62,28 @@ def showData(image):
           binary_data += r[-1] #extracting data from the least significant bit of red pixel
           binary_data += g[-1] #extracting data from the least significant bit of red pixel
           binary_data += b[-1] #extracting data from the least significant bit of red pixel
+all_bytes = [ binary_data[i: i+8] for i in range(0, len(binary_data), 8) ]
+  # convert from bits to characters
+  decoded_data = ""
+  for byte in all_bytes:
+      decoded_data += chr(int(byte, 2))
+      if decoded_data[-5:] == "#####": #check if we have reached the delimeter which is "#####"
+          break
+  #print(decoded_data)
+  return decoded_data[:-5] #remove the delimeter to show the original hidden message
+# Encode data into image 
+def encode_text(): 
+  image_name = input("Enter image name(with extension): ") 
+  image = cv2.imread(image_name) # Read the input image using OpenCV-Python.
+  #It is a library of Python bindings designed to solve computer vision problems. 
+  
+  #details of the image
+  print("The shape of the image is: ",image.shape) #check the shape of image to calculate the number of bytes in it
+  print("The original image is as shown below: ")
+  resized_image = cv2.resize(image, (500, 500)) #resize the image as per your requirement
+  cv2_imshow(resized_image) #display the image
+  
+      
+  data = input("Enter data to be encoded : ") 
+  if (len(data) == 0): 
+    raise ValueError('Data is empty')
