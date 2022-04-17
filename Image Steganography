@@ -25,3 +25,6 @@ def hideData(image, secret_message):
       raise ValueError("Error encountered insufficient bytes, need bigger image or less data !!")
   
   secret_message += "#####"
+data_index = 0
+  # convert input data to binary format using messageToBinary() fucntion
+  binary_secret_msg = messageToBinary(secret_message)
