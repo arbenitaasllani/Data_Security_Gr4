@@ -82,8 +82,40 @@ def encode_text():
   print("The original image is as shown below: ")
   resized_image = cv2.resize(image, (500, 500)) #resize the image as per your requirement
   cv2_imshow(resized_image) #display the image
-  
-      
+     
   data = input("Enter data to be encoded : ") 
   if (len(data) == 0): 
     raise ValueError('Data is empty')
+    filename = input("Enter the name of new encoded image(with extension): ")
+
+  encoded_image = hideData(image, data) # call the hideData function to hide the secret message into the selected image
+
+  cv2.imwrite(filename, encoded_image)
+# Decode the data in the image 
+
+def decode_text():
+  # read the image that contains the hidden image
+  image_name = input("Enter the name of the steganographed image that you want to decode (with extension) :") 
+  image = cv2.imread(image_name) #read the image using cv2.imread() 
+  print("The Steganographed image is as shown below: ")
+
+  resized_image = cv2.resize(image, (500, 500))  #resize the original image as per your requirement
+
+  cv2_imshow(resized_image) #display the Steganographed image
+  text = showData(image)
+  return text
+# Image Steganography         
+
+def Steganography(): 
+
+    a = input("Image Steganography \n 1. Encode the data \n 2. Decode the data \n Your input is: ")
+ userinput = int(a)
+    if (userinput == 1):
+      print("\nEncoding....")
+      encode_text() 
+    elif (userinput == 2):
+      print("\nDecoding....") 
+      print("Decoded message is " + decode_text()) 
+    else: 
+        raise Exception("Enter correct input") 
+Steganography() #encode image
